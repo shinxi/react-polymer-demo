@@ -1,0 +1,23 @@
+{
+  "name": "my-app2",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Shin Xi <jinshinxi@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "px-tree": "^2.0.3"
+  },
+  "devDependencies": {
+    "polymer": "^2.1.1"
+  }
+}
