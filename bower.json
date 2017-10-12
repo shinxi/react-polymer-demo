@@ -15,7 +15,11 @@
     "tests"
   ],
   "dependencies": {
-    "px-tree": "^2.0.3"
+    "px-tree": "^2.0.3",
+    "px-typeahead": "^2.0.7",
+    "paper-swatch-picker": "^2.0.1",
+    "px-toggle": "^2.0.3",
+    "px-dropdown": "^4.0.14"
   },
   "devDependencies": {
     "polymer": "^2.1.1"
