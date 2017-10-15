@@ -2,10 +2,7 @@
   "env": {
     "browser": true
   },
-  "extends": [
-    "react-app",
-    "airbnb"
-  ],
+  "extends": ["react-app", "airbnb"],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
@@ -16,19 +13,28 @@
   },
   "rules": {
     "no-unused-vars": "warn",
-    "no-debugger": "warn",
+    "no-debugger": "off",
     "no-console": "warn",
+    "no-return-assign": "off",
     "import/no-named-as-default": "off",
     "import/prefer-default-export": "off",
     "import/first": "off",
     "react/jsx-filename-extension": "off",
     "react/prefer-stateless-function": "off",
     "react/jsx-closing-bracket-location": [1, "props-aligned"],
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": ["src/**/*.test.js", "scripts/**/*.js", "src/test/**/*.js"]
+      }
+    ]
   },
   "settings": {
     "import/resolver": {
-      "babel-module": {}
+      "node": {
+        "moduleDirectory": ["bower_components", "node_modules", "src"]
+      }
     }
   }
 }

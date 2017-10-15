@@ -20,6 +20,9 @@
 # ci
 report
 
+# polymer analyze
+/src/utils/polymer/meta.json
+
 # misc
 .DS_Store
 .env.local
