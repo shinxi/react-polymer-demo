@@ -1,1 +1,1 @@
-export { default } from './Typeahead2';
+export { default } from './Typeahead';

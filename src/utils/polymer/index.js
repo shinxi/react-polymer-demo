@@ -1,3 +1,3 @@
-import createComponent from './createComponent';
+import withReactWrapper from './withReactWrapper';
 
-export { createComponent };
+export { withReactWrapper };

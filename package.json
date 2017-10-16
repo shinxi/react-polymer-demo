@@ -63,19 +63,23 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "npm run analyze && node scripts/start.js",
+    "start": "npm run polymer:analyze && node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "lint": "NODE_ENV=development eslint js test *.js",
-    "analyze": "node scripts/analyzePolymer.js",
+    "polymer:analyze": "node scripts/polymer/analyze.js",
+    "polymer:createPolymerInReact": "node scripts/polymer/createPolymerInReact.js",
     "prettier": "NODE_ENV=development prettier-eslint --write \"src/**/*.js\""
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.0",
     "copy-webpack-plugin": "^4.1.1",
     "fs-extra": "^3.0.1",
+    "handlebars": "^4.0.10",
     "polymer-analyzer": "^2.3.0",
-    "polymer-webpack-loader": "^2.0.0"
+    "polymer-webpack-loader": "^2.0.0",
+    "shelljs": "^0.7.8",
+    "yargs": "^9.0.1"
   },
   "jest": {
     "collectCoverageFrom": ["src/**/*.{js,jsx}"],
@@ -103,9 +107,5 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "polymer": {
-    "px-tree": "px-tree/px-tree.html",
-    "px-toggle": "px-toggle/px-toggle.html",
-    "px-typeahead": "px-typeahead/px-typeahead.html"
-  }
+  "polymer": {}
 }

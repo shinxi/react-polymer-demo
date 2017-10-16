@@ -3,9 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import 'px-typeahead/px-typeahead.html';
 
-import { createComponent } from 'utils/polymer';
+import { withReactWrapper } from 'utils/polymer';
 
-const PredixTypeahead = createComponent('px-typeahead');
+const PredixTypeahead = withReactWrapper('px-typeahead');
 class Typeahead extends React.Component {
   render() {
     const {

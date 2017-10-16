@@ -16,6 +16,7 @@
     "no-debugger": "off",
     "no-console": "warn",
     "no-return-assign": "off",
+    "no-param-reassign": ["error", { "props": false }],
     "import/no-named-as-default": "off",
     "import/prefer-default-export": "off",
     "import/first": "off",

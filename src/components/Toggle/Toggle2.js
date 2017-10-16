@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import 'px-toggle/px-toggle.html';
-import { createComponent } from 'utils/polymer';
+import { withReactWrapper } from 'utils/polymer';
 
-const PredixToggle = createComponent('px-toggle');
+const PredixToggle = withReactWrapper('px-toggle');
 
 class Toggle extends React.Component {
   render() {

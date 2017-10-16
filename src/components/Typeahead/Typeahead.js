@@ -1,111 +1,58 @@
-// import reactPolymer from 'react-polymer';
 import React from 'react';
 import PropTypes from 'prop-types';
 import 'px-typeahead/px-typeahead.html';
-import 'paper-swatch-picker/paper-swatch-picker.html';
+import { withReactWrapper } from 'utils/polymer';
 
-// reactPolymer.registerEvent('px-typeahead-search-input-change', 'onTypeaheadSearchInputChanged');
+const propsNeedStrinify = ['localCandidates'];
+const ReactWrapper = withReactWrapper('px-typeahead', propsNeedStrinify);
+
 class Typeahead extends React.Component {
-  componentDidMount() {
-    const { onInputValueChanged, onValueChanged } = this.props;
-    if (onInputValueChanged) {
-      this.polymerElement.addEventListener('input-value-changed', onInputValueChanged);
-    }
-    if (onValueChanged) {
-      this.polymerElement.addEventListener('value-changed', onValueChanged);
-    }
-  }
-
   render() {
-    const {
-      placeholder,
-      'local-candidates': localCandidates,
-      'prefetch-url': prefetchURL,
-    } = this.props;
-    return (
-      <div>
-        <px-typeahead
-          ref={ele => (this.polymerElement = ele)}
-          placeholder={placeholder}
-          local-candidates={JSON.stringify(localCandidates)}
-          prefetch-url={JSON.stringify(prefetchURL)}
-        />
-      </div>
-    );
+    return <ReactWrapper {...this.props} />;
   }
 }
 
 Typeahead.propTypes = {
+  /**
+   * Sets diabled on the input element.
+   */
+  disabled: PropTypes.objectOf(PropTypes.any),
+  /**
+   * The placeholder for the input element.
+   */
   placeholder: PropTypes.string,
-  'local-candidates': PropTypes.arrayOf(PropTypes.any),
-  'prefetch-url': PropTypes.string,
-  onInputValueChanged: PropTypes.func,
-  onValueChanged: PropTypes.func,
+  /**
+   * The search candidates from local data model.
+   */
+  localCandidates: PropTypes.arrayOf(PropTypes.any),
+  /**
+   * Url for a prefectched list in json format for the list of suggestion candidates.
+The response should be an array - for example: ["a","b"]
+   */
+  prefetchUrl: PropTypes.string,
+  /**
+   * Maximum number of suggestions for remote urls
+   */
+  maxSuggestions: PropTypes.number,
+  /**
+   * Remote url to perform a search using the value in the input. 
+   * The input value will be passed in as url parameter. The placeholder should be %QUERY.
+   */
+  remoteUrl: PropTypes.string,
+  /**
+   * A boolean property to indicate if a search happens with a remote Url.
+Must be used together with remoteUrl.
+   */
+  remoteUrlSearching: PropTypes.bool,
+  /**
+   * The currently selected value of the input.
+   */
+  value: PropTypes.string,
+  /**
+   * The current value of the input while the user is searching.
+   */
+  inputValue: PropTypes.string,
 };
 
-Typeahead.defaultProps = {
-  placeholder: 'Enter your search query',
-  'local-candidates': [
-    'Alabama',
-    'Alaska',
-    'American Samoa',
-    'Arizona',
-    'Arkansas',
-    'California',
-    'Colorado',
-    'Connecticut',
-    'Delaware',
-    'District Of Columbia',
-    'Federated States Of Micronesia',
-    'Florida',
-    'Georgia',
-    'Guam',
-    'Hawaii',
-    'Idaho',
-    'Illinois',
-    'Indiana',
-    'Iowa',
-    'Kansas',
-    'Kentucky',
-    'Louisiana',
-    'Maine',
-    'Marshall Islands',
-    'Maryland',
-    'Massachusetts',
-    'Michigan',
-    'Minnesota',
-    'Mississippi',
-    'Missouri',
-    'Montana',
-    'Nebraska',
-    'Nevada',
-    'New Hampshire',
-    'New Jersey',
-    'New Mexico',
-    'New York',
-    'North Carolina',
-    'North Dakota',
-    'Northern Mariana Islands',
-    'Ohio',
-    'Oklahoma',
-    'Oregon',
-    'Palau',
-    'Pennsylvania',
-    'Puerto Rico',
-    'Rhode Island',
-    'South Carolina',
-    'South Dakota',
-    'Tennessee',
-    'Texas',
-    'Utah',
-    'Vermont',
-    'Virgin Islands',
-    'Virginia',
-    'Washington',
-    'West Virginia',
-    'Wisconsin',
-    'Wyoming',
-  ],
-  'prefetch-url': 'https://www.predix-ui.com/px-typeahead/px-typeahead/countries.json',
-};
+Typeahead.defaultProps = {};
 export default Typeahead;
