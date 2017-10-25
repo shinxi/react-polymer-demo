@@ -6,14 +6,15 @@ const path = require('path');
 const Handlebars = require('handlebars');
 const { Analyzer, FSUrlLoader, generateAnalysis } = require('polymer-analyzer');
 
-console.time('createPolymerInReact');
 const libName = argv._[0];
 if (!libName) {
   console.log('Not found install target. Quiting...');
   return;
 }
+console.log(`Creating react wrapper for ${libName}`);
+console.time('createPolymerInReact');
 
-const polymer = settings.polymer;
+const polymer = settings.polymer || {};
 
 let bowerPath = polymer[libName];
 if (!bowerPath) {
@@ -39,6 +40,13 @@ const indexTplContent = fs.readFileSync(path.join('scripts/polymer/template/inde
 const indexTpl = Handlebars.compile(indexTplContent, {
   noEscape: true,
 });
+const testTplContent = fs.readFileSync(path.join('scripts/polymer/template/Component.test.tpl'), {
+  encoding: 'utf8',
+});
+const testTpl = Handlebars.compile(testTplContent, {
+  noEscape: true,
+});
+
 const types = {
   string: 'PropTypes.string',
   Object: 'PropTypes.objectOf(PropTypes.any)',
@@ -46,7 +54,8 @@ const types = {
   boolean: 'PropTypes.bool',
   number: 'PropTypes.number',
 };
-analyzer.analyze([bowerPath]).then((analysis) => {
+
+analyzer.analyze([bowerPath]).then(analysis => {
   const result = generateAnalysis(
     analysis,
     '',
@@ -54,7 +63,6 @@ analyzer.analyze([bowerPath]).then((analysis) => {
   );
   const element = result.elements[0];
   const defaults = {};
-  const propsNeedStrinify = [];
   let reactClassName = element.tagname.replace(/^px-/g, '');
   reactClassName = `-${reactClassName}`.replace(/-(\w)/g, (match, group = '') =>
     group.toUpperCase(),
@@ -62,28 +70,42 @@ analyzer.analyze([bowerPath]).then((analysis) => {
   element.reactClassName = reactClassName;
   element.bowerPath = bowerPath;
 
-  element.properties.forEach((property) => {
-    defaults[property.name] = property.defaultValue;
+  element.properties.forEach(property => {
+    if (property.defaultValue) {
+      defaults[property.name] = property.defaultValue;
+    }
   });
-  element.attributes.forEach((attr) => {
+  element.attributes.forEach(attr => {
     attr.reactPropName = attr.name.replace(/-(\w)/g, (match, group) => group.toUpperCase());
     attr.reactType = types[attr.type] || 'PropTypes.any';
-    if (attr.type === 'object' || attr.type === 'Array') {
-      propsNeedStrinify.push(attr.reactPropName);
-    }
     if (defaults[attr.reactPropName]) {
       attr.defaultValue = defaults[attr.reactPropName];
     }
+    if (attr.description) {
+      attr.description = attr.description.replace(/\n/g, '\n   * ');
+    }
   });
-  if (propsNeedStrinify.length) {
-    element.propsNeedStrinify = JSON.stringify(propsNeedStrinify);
+  if (Object.keys(defaults).length) {
+    element.hasDefaults = true;
+  }
+  element.events.forEach(event => {
+    const reactPropName = `-${event.name}`.replace(/-(\w)/g, (match, group) => group.toUpperCase());
+    event.reactPropName = `on${reactPropName}`;
+  });
+  if (!element.events.length) {
+    delete element.events;
   }
   const componentContent = componentTpl(element);
   const indexContent = indexTpl(element);
+  const testContent = testTpl(element);
   fsa.outputFileSync(path.join('src/components', reactClassName, 'index.js'), indexContent);
   fsa.outputFileSync(
     path.join('src/components', reactClassName, `${reactClassName}.js`),
     componentContent,
+  );
+  fsa.outputFileSync(
+    path.join('src/components', reactClassName, `${reactClassName}.test.js`),
+    testContent,
   );
   console.timeEnd('createPolymerInReact');
   console.log(`React class created at: ${path.join('src/components', reactClassName)}`);

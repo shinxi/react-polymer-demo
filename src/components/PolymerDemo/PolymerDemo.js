@@ -24,13 +24,16 @@ class PolymerDemo extends React.Component {
       dropdownSelectedValue: '',
     };
   }
-  onTypeaheadInputChanged = (event) => {
+  onTypeaheadInputChanged = event => {
     this.setState({ typeaheadValue: event.detail.value });
   };
-  onToggleCheckChanged = (event) => {
+  onToggleCheckChanged = event => {
     this.setState({ toggleCheckValue: event.detail.value });
   };
-  onDropdownSelectedChanged = (event) => {
+  onDropdownSelectedChanged = event => {
+    if (!event.target.selected) {
+      return;
+    }
     this.setState({
       dropdownSelectedValue: event.target.items && event.target.items[event.target.selected].val,
     });
@@ -38,16 +41,17 @@ class PolymerDemo extends React.Component {
   render() {
     return (
       <div className="polymer-demo">
-        <h2>Polymer Demo</h2>
+        <h2>Polymer in React Demo</h2>
         <div>
-          <h3>Predix Tree in React:</h3>
+          <h3>px-tree in React:</h3>
           <Tree items={treeItems} />
         </div>
         <div>
           <h3>px-typeahead in React: current value is {this.state.typeaheadValue}</h3>
           <Typeahead
             onInputValueChanged={this.onTypeaheadInputChanged}
-            localCandidates={typeaheadData} />
+            localCandidates={typeaheadData}
+          />
         </div>
         <div>
           <h3>px-toggle in React: {`current value is ${this.state.toggleCheckValue}`}</h3>
@@ -69,11 +73,15 @@ class PolymerDemo extends React.Component {
         </div>
         <div>
           <h3>px-modal in React:</h3>
-          <Modal btnModalPositive="Submit" btnModalNegative="Cancel" modalHeading="Magna Adipiscing">
+          <Modal
+            btnModalPositive="Submit"
+            btnModalNegative="Cancel"
+            modalHeading="Magna Adipiscing"
+          >
             <button className="btn btn--primary modal-trigger">Open Modal</button>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua.
             </p>
           </Modal>
         </div>
@@ -83,7 +91,11 @@ class PolymerDemo extends React.Component {
         </div>
         <div>
           <h3>px-title in React:</h3>
-          <Tile title="Title" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porta sem malesuada magna mollis euismod. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Maecenas sed diam eget risus varius blandit sit amet non magna." hoverable>
+          <Tile
+            title="Title"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porta sem malesuada magna mollis euismod. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Maecenas sed diam eget risus varius blandit sit amet non magna."
+            hoverable
+          >
             <div slot="thumbnail" />
             <div slot="footer">Footer Content Here</div>
           </Tile>
@@ -91,16 +103,12 @@ class PolymerDemo extends React.Component {
 
         <div>
           <h3>px-view-header in React:</h3>
-          <ViewHeader
-            title="Current View Title"
-            subtitle="A subtitle describing the view.">
-            <div
-              id="left"
-              className="actionable">Back
+          <ViewHeader title="Current View Title" subtitle="A subtitle describing the view.">
+            <div id="left" className="actionable">
+              Back
             </div>
-            <div
-              id="right"
-              className="actionable">Next
+            <div id="right" className="actionable">
+              Next
             </div>
           </ViewHeader>
         </div>
@@ -110,12 +118,9 @@ class PolymerDemo extends React.Component {
             orientation="right"
             for="btn1"
             popoverTitle="This is a px-popover"
-            popoverBody="Capable of displaying a longer body text than a tootip." />
-          <button
-            className="btn btn--tertiary"
-            id="btn1"
-            type="button"
-            name="button">
+            popoverBody="Capable of displaying a longer body text than a tootip."
+          />
+          <button className="btn btn--tertiary" id="btn1" type="button" name="button">
             Click here
           </button>
         </div>

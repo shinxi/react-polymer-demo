@@ -2,22 +2,13 @@
   "name": "my-app2",
   "description": "",
   "main": "",
-  "authors": [
-    "Shin Xi <jinshinxi@gmail.com>"
-  ],
+  "authors": ["Shin Xi <jinshinxi@gmail.com>"],
   "license": "MIT",
   "homepage": "",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
+  "ignore": ["**/.*", "node_modules", "bower_components", "test", "tests"],
   "dependencies": {
     "px-tree": "^2.0.3",
     "px-typeahead": "^2.0.7",
-    "paper-swatch-picker": "^2.0.1",
     "px-toggle": "^2.0.3",
     "px-dropdown": "^4.0.14",
     "px-alert-label": "^2.0.8",
@@ -26,13 +17,16 @@
     "px-vis-spark": "^3.0.1",
     "px-modal": "^2.0.6",
     "px-overlay": "^1.0.2",
+    "polymer": "^1.9.1",
     "px-popover": "^2.0.6",
     "px-buttons-design": "^2.0.5",
     "px-progress-bar": "^1.1.0",
     "px-tile": "^1.0.12",
-    "px-view-header": "^1.0.4"
-  },
-  "devDependencies": {
-    "polymer": "^2.1.1"
+    "px-view-header": "^1.0.4",
+    "px-datetime-picker": "^1.0.4",
+    "px-calendar-picker": "^1.0.9",
+    "px-spinner": "^2.1.0",
+    "px-typography-design": "^2.0.3",
+    "px-key-value-pair": "^1.1.2"
   }
 }

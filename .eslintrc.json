@@ -12,6 +12,7 @@
     "sourceType": "module"
   },
   "rules": {
+    "arrow-parens": "off", // Incompatible with prettier
     "no-unused-vars": "warn",
     "no-debugger": "off",
     "no-console": "warn",
@@ -22,7 +23,6 @@
     "import/first": "off",
     "react/jsx-filename-extension": "off",
     "react/prefer-stateless-function": "off",
-    "react/jsx-closing-bracket-location": [1, "props-aligned"],
     "react/require-default-props": "off",
     "import/no-extraneous-dependencies": [
       "error",

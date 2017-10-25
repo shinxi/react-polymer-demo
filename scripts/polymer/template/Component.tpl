@@ -1,20 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '{{bowerPath}}';
 import { withReactWrapper } from 'utils/polymer';
 
-{{#if propsNeedStrinify}}
-const propsNeedStrinify = {{propsNeedStrinify}}
-{{/if}}
-const ReactWrapper = withReactWrapper('{{tagname}}'{{#if propsNeedStrinify}}, propsNeedStrinify{{/if}});
-
-class {{reactClassName}} extends React.Component {
-  render() {
-    return <ReactWrapper {...this.props} />;
-  }
-}
-
-{{reactClassName}}.propTypes = {
+const propTypes = {
 {{#attributes}}
   /**
    * {{description}}
@@ -22,12 +10,50 @@ class {{reactClassName}} extends React.Component {
   {{reactPropName}}: {{reactType}},
 {{/attributes}}
 };
+{{#hasDefaults}}
 
-{{reactClassName}}.defaultProps = {
+const defaultProps = {
 {{#attributes}}
 {{#if defaultValue}}
   {{reactPropName}}: {{defaultValue}},
 {{/if}}
 {{/attributes}}
 };
+{{/hasDefaults}}
+{{#if events}}
+
+const events = [
+{{#events}}
+  /**
+   * {{description}}
+   */
+  {
+    name: '{{name}}',
+    reactPropName: '{{reactPropName}}',
+  },
+{{/events}}
+];
+{{/if}}
+
+const options = {
+  tagname: '{{tagname}}',
+  bowerPath: '{{bowerPath}}',
+  {{#if events}}
+  events,
+  {{/if}}
+};
+
+const ReactWrapper = withReactWrapper('{{tagname}}', options);
+
+class {{reactClassName}} extends React.Component {
+  render() {
+    return <ReactWrapper {...this.props} />;
+  }
+}
+
+{{reactClassName}}.propTypes = propTypes;
+{{#hasDefaults}}
+{{reactClassName}}.defaultProps = defaultProps;
+{{/hasDefaults}}
+
 export default {{reactClassName}};

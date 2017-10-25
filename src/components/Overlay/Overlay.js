@@ -1,9 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import 'px-overlay/px-overlay.html';
 import { withReactWrapper } from 'utils/polymer';
 
-const ReactWrapper = withReactWrapper('px-overlay');
+const propTypes = {
+};
+
+const options = {
+  tagname: 'px-overlay',
+  bowerPath: 'px-overlay/px-overlay.html',
+};
+
+const ReactWrapper = withReactWrapper('px-overlay', options);
 
 class Overlay extends React.Component {
   render() {
@@ -11,9 +18,6 @@ class Overlay extends React.Component {
   }
 }
 
-Overlay.propTypes = {
-};
+Overlay.propTypes = propTypes;
 
-Overlay.defaultProps = {
-};
 export default Overlay;

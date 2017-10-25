@@ -1,5 +1,4 @@
-'use strict';
-
+const reactPolymer = require('react-polymer');
 const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
@@ -34,6 +33,8 @@ module.exports = {
   // This means they will be the "root" imports that are included in JS bundle.
   // The first two entry points enable "hot" CSS and auto-refreshes for JS.
   entry: [
+    // For polymer events
+    // require.resolve('./polymer'),
     // Include an alternative client for WebpackDevServer. A client's job is to
     // connect to WebpackDevServer by a socket and get notified about changes.
     // When you save a file, the client will either apply hot updates (in case
@@ -65,7 +66,7 @@ module.exports = {
     // There are also additional JS chunk files if you use code splitting.
     chunkFilename: 'static/js/[name].chunk.js',
     // This is the URL that app is served from. We use "/" in development.
-    publicPath: publicPath,
+    publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
     devtoolModuleFilenameTemplate: info =>
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
@@ -77,7 +78,7 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/253
     modules: ['node_modules', paths.appNodeModules].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
-      process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
+      process.env.NODE_PATH.split(path.delimiter).filter(Boolean),
     ),
     // These are the reasonable defaults supported by the Node ecosystem.
     // We also include JSX as a common component filename extension to support
@@ -87,7 +88,6 @@ module.exports = {
     // for React Native Web.
     extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx'],
     alias: {
-      
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
@@ -123,7 +123,6 @@ module.exports = {
               },
               ignore: false,
               useEslintrc: false,
-              
             },
             loader: require.resolve('eslint-loader'),
           },
@@ -155,9 +154,12 @@ module.exports = {
               babelrc: false,
               presets: [require.resolve('babel-preset-react-app')],
               plugins: [
-                ['module-resolver', {
-                  root: ['./src'],
-                }],
+                [
+                  'module-resolver',
+                  {
+                    root: ['./src'],
+                  },
+                ],
               ],
               // This is a feature of `babel-loader` for webpack (not Babel itself).
               // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -216,10 +218,7 @@ module.exports = {
             // Chained loaders run last to first. So it will run
             // polymer-webpack-loader, and hand the output to
             // babel-loader. This let's us transpile JS in our `<script>` elements.
-            use: [
-              { loader: 'babel-loader'},
-              { loader: 'polymer-webpack-loader' }
-            ]
+            use: [{ loader: 'babel-loader' }, { loader: 'polymer-webpack-loader' }],
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.
@@ -280,13 +279,12 @@ module.exports = {
     // This plugin will copy files over for us without transforming them.
     // That's important because the custom-elements-es5-adapter.js MUST
     // remain in ES2015.
-    new CopyWebpackPlugin([{
-      from: path.resolve(__dirname, 'bower_components/webcomponentsjs/*.js'),
-      to: 'bower_components/webcomponentsjs/[name].[ext]'
-    }, {
-      from: "bower_components",
-      to: "bower_components"
-    }])
+    new CopyWebpackPlugin([
+      {
+        from: 'bower_components',
+        to: 'bower_components',
+      },
+    ]),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

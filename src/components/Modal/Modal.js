@@ -1,17 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import 'px-modal/px-modal.html';
 import { withReactWrapper } from 'utils/polymer';
 
-const ReactWrapper = withReactWrapper('px-modal');
-
-class Modal extends React.Component {
-  render() {
-    return <ReactWrapper {...this.props} />;
-  }
-}
-
-Modal.propTypes = {
+const propTypes = {
   /**
    * Modal id string.
    */
@@ -42,6 +33,27 @@ Modal.propTypes = {
   btnModalPositiveDisabled: PropTypes.bool,
 };
 
-Modal.defaultProps = {
+const defaultProps = {
+  modalId: "myModal",
+  btnModalPositiveClickedEventName: "btnModalPositiveClicked",
+  btnModalNegativeClickedEventName: "btnModalNegativeClicked",
+  btnModalPositiveDisabled: false,
 };
+
+const options = {
+  tagname: 'px-modal',
+  bowerPath: 'px-modal/px-modal.html',
+};
+
+const ReactWrapper = withReactWrapper('px-modal', options);
+
+class Modal extends React.Component {
+  render() {
+    return <ReactWrapper {...this.props} />;
+  }
+}
+
+Modal.propTypes = propTypes;
+Modal.defaultProps = defaultProps;
+
 export default Modal;

@@ -1,5 +1,5 @@
 {
-  "name": "my-app2",
+  "name": "react-polymer-demo",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -63,12 +63,16 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "npm run polymer:analyze && node scripts/start.js",
+    "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
+    "coverage": "npm test -- --coverage",
+    "cov:open": "open coverage/lcov-report/index.html",
     "lint": "NODE_ENV=development eslint js test *.js",
-    "polymer:analyze": "node scripts/polymer/analyze.js",
-    "polymer:createPolymerInReact": "node scripts/polymer/createPolymerInReact.js",
+    "polymer": "npm run create-polymer-in-react",
+    "create-polymer-in-react": "node scripts/polymer/createPolymerInReact.js",
+    "polymer:all": "npm run create-polymer-in-react:all",
+    "create-polymer-in-react:all": "node scripts/polymer/createAll.js",
     "prettier": "NODE_ENV=development prettier-eslint --write \"src/**/*.js\""
   },
   "devDependencies": {
@@ -103,9 +107,6 @@
   },
   "babel": {
     "presets": ["react-app"]
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "polymer": {}
 }
